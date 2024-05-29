@@ -22,7 +22,7 @@ from opentelemetry.instrumentation.asgi import OpenTelemetryMiddleware
 from opentelemetry.instrumentation.httpx import (
     HTTPXClientInstrumentor,
 )
-from opentelemetry.instrumentation.openai import OpenAIInstrumentor
+from openai import OpenAIInstrumentor
 from quart import (
     Blueprint,
     Quart,
@@ -34,7 +34,7 @@ from quart import (
     send_file,
     send_from_directory,
 )
-from quart_cors import cors
+from quart import cors
 
 from approaches.approach import Approach
 from approaches.chatreadretrieveread import ChatReadRetrieveReadApproach
@@ -293,6 +293,19 @@ async def list_uploaded(auth_claims: dict[str, Any]):
     return jsonify(files), 200
 
 
+@bp.before_app_serving
+async def setup_clients():
+    """
+    Set up clients for Azure services and initialize configuration variables.
+
+    This function sets up clients for Azure services such as AI Search and Blob Storage.
+    It also initializes configuration variables required for the application.
+
+    Returns:
+        None
+    """
+    # Replace these with your own values, either in environment variables or directly here
+    ...
 @bp.before_app_serving
 async def setup_clients():
     # Replace these with your own values, either in environment variables or directly here
